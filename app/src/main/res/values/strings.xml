@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Message Tracker</string>
+    <string name="channel_name">Default</string>
+    <string name="channel_description">Channel to show received sms</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="sms"
+            type="com.rishav.messagetracker.data.StoredSms" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cl_sms"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorSurface"
+    android:padding="@dimen/padding_medium"
+    android:layout_marginBottom="@dimen/padding_medium">
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{sms.originatingNumber}"
+        android:textAppearance="@style/Text.SemiBold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{sms.message}"
+        android:textAppearance="@style/Text.Normal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
