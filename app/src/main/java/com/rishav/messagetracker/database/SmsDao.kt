@@ -20,4 +20,10 @@ interface SmsDao {
 
     @Query("SELECT * FROM sms_table ORDER BY timeInMillis DESC")
     fun getAllSms(): LiveData<List<StoredSms>?>
+
+    @Query("SELECT * FROM sms_table WHERE (timeInMillis<= :endTime AND timeInMillis> :startTime) ORDER BY timeInMillis DESC")
+    suspend fun getAllSmsInTimeInterval(startTime : Long, endTime : Long): List<StoredSms>?
+
+    @Query("SELECT * FROM sms_table WHERE timeInMillis<= :endTime ORDER BY timeInMillis DESC")
+    suspend fun getAllSmsFromYesterday(endTime : Long): List<StoredSms>?
 }

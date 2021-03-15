@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:text="@{sms.message}"
         android:textAppearance="@style/Text.Normal"
+        android:layout_marginTop="@dimen/padding_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
 

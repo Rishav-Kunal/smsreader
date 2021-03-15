@@ -1,7 +1,5 @@
-package com.rishav.messagetracker
+package com.rishav.messagetracker.receiver
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -12,8 +10,11 @@ import android.telephony.SmsMessage
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.rishav.messagetracker.CHANNEL_ID
+import com.rishav.messagetracker.R
 import com.rishav.messagetracker.data.StoredSms
 import com.rishav.messagetracker.repository.SmsRepository
+import com.rishav.messagetracker.ui.SmsListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ class MessageReceiver : BroadcastReceiver() {
         if (pdus != null && format != null) {
             val storedSms = StoredSms(System.currentTimeMillis())
             var msgs: Array<SmsMessage?> = arrayOfNulls(pdus.size)
+            val smsString  =  StringBuffer()
             for (i in msgs.indices) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     msgs[i] = SmsMessage.createFromPdu(
@@ -48,12 +50,14 @@ class MessageReceiver : BroadcastReceiver() {
                         SmsMessage.createFromPdu(pdus[i] as ByteArray)
                 }
                 // Build the message to show.
-
-                storedSms.message = msgs[i]?.messageBody
-                storedSms.originatingNumber = msgs[i]?.originatingAddress
+                smsString.append(msgs[i]?.messageBody)
+                if (storedSms.originatingNumber == null) {
+                    storedSms.originatingNumber = msgs[i]?.originatingAddress
+                }
                 Log.d(TAG, "sms time - ${storedSms.timeInMillis}, sender ${storedSms.originatingNumber}, message - ${storedSms.message}")
 
             }
+            storedSms.message = smsString.toString()
             publishNotification(sms = storedSms,context)
             smsRepository.saveSms(storedSms)
         }

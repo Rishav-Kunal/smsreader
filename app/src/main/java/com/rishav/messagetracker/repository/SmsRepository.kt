@@ -14,4 +14,6 @@ interface SmsRepository {
     suspend fun deleteSms(sms: StoredSms)
 
     fun getAllSms(): LiveData<List<StoredSms>?>
+
+    suspend fun getAllSmsInInterval(): List<Any>?
 }
